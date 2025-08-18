@@ -102,4 +102,13 @@ public class ApplicationContextTest {
 
         assertThat(testBaseObjectMapper).isNotNull();
     }
+
+    @Test
+    @DisplayName("@Bean 어노테이션 Bean 중 중복 타입이 있을 경우 @Primary 어노테이션의 Bean을 선택")
+    public void t9() {
+        JavaTimeModule testBaseJavaTimeModule2 = applicationContext.genBean("testBaseJavaTimeModule2");
+        JavaTimeModule testParamJavaTimeModule = applicationContext.genBean("testParamJavaTimeModule");
+
+        assertThat(testBaseJavaTimeModule2).isEqualTo(testParamJavaTimeModule);
+    }
 }
