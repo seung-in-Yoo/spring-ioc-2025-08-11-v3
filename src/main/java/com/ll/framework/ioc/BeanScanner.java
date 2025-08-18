@@ -3,6 +3,7 @@ package com.ll.framework.ioc;
 import com.ll.framework.ioc.annotations.Bean;
 import com.ll.framework.ioc.annotations.Component;
 import com.ll.framework.ioc.annotations.Configuration;
+import com.ll.framework.ioc.annotations.Primary;
 import com.ll.standard.util.Ut;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -86,8 +87,16 @@ public class BeanScanner {
         Parameter[] parameters = method.getParameters();
         for(Parameter parameter : parameters){
             String typeName = parameter.getType().getTypeName();
+            if (!typeMapper.containsKey(typeName)) continue;
+            List<String> beanNames = typeMapper.get(typeName);
+            if (beanNames.size()==1) fieldList.add(beanNames.getFirst());
+            else {
+                String primaryBeanName = beanNames.stream().
+                        filter((name)->((Method) recipes.get(name)).isAnnotationPresent(Primary.class))
+                        .findFirst().orElse(null);
+                fieldList.add(primaryBeanName);
+            }
 
-            if (typeMapper.containsKey(typeName)) fieldList.add(typeMapper.get(typeName).getFirst());
         }
         return fieldList;
     }
