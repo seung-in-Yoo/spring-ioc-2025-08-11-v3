@@ -5,7 +5,6 @@ import com.ll.framework.ioc.annotations.Component;
 import com.ll.framework.ioc.annotations.Configuration;
 import com.ll.framework.ioc.annotations.Primary;
 import com.ll.standard.util.Ut;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
@@ -15,13 +14,10 @@ import java.lang.reflect.Parameter;
 import java.util.*;
 
 public class BeanScanner {
-    Reflections reflections;
-    @Getter
-    Map<String, Object> recipes;
-    @Getter
-    Map<String, Object> beans;
-
-    Map<String, List<String>> typeMapper;
+    private final Reflections reflections;
+    private final Map<String, Object> recipes;
+    private final Map<String, Object> beans;
+    private final Map<String, List<String>> typeMapper;
 
     public BeanScanner(String basePackage) {
         reflections = new Reflections(basePackage); // 패키지 루트

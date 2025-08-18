@@ -3,7 +3,7 @@ package com.ll.framework.ioc;
 import com.ll.standard.util.Ut;
 
 public class ApplicationContext {
-    BeanScanner beanScanner;
+    private final BeanScanner beanScanner;
 
     public ApplicationContext(String basePackage) {
         beanScanner =  new BeanScanner(basePackage);
